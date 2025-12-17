@@ -1,36 +1,264 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 SecurePass - Генератор Паролей
 
-## Getting Started
+Профессиональное Express.js приложение для генерации безопасных паролей с REST API и современным веб-интерфейсом.
 
-First, run the development server:
+## 📋 Описание проекта
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Это полноценное Express-приложение, разработанное в рамках контрольной работы по Express.js. Приложение демонстрирует:
+
+- ✅ Базовый Express-сервер с маршрутизацией
+- ✅ RESTful API (GET, POST, DELETE)
+- ✅ Работу с параметрами (req.params, req.query, req.body)
+- ✅ Обработку JSON и URL-encoded данных
+- ✅ Собственные middleware (логирование, валидация, обработка ошибок)
+- ✅ Раздачу статических файлов
+- ✅ Модульную архитектуру (routes + controllers + middleware)
+
+## 🚀 Функциональность
+
+### Основные возможности:
+
+- **Генерация паролей** с настраиваемыми параметрами:
+  - Длина: 4-64 символа
+  - Прописные буквы (A-Z)
+  - Строчные буквы (a-z)
+  - Цифры (0-9)
+  - Специальные символы (!@#$%^&*)
+
+- **Оценка надежности пароля**:
+  - Автоматический расчет силы пароля
+  - Визуальная индикация (Слабый/Средний/Хороший/Отличный)
+  - Анализ используемых символов
+
+- **История генерации**:
+  - Сохранение последних 50 паролей
+  - Копирование паролей из истории
+  - Удаление отдельных записей
+  - Полная очистка истории
+
+- **Современный UI**:
+  - Темная тема в стиле профессиональных инструментов
+  - Адаптивный дизайн для всех устройств
+  - Интерактивные элементы с анимациями
+  - Toast-уведомления
+
+## 📁 Структура проекта
+
+```
+password-generator-express/
+├── server.js                 # Главный файл сервера
+├── package.json             # Зависимости проекта
+├── README.md                # Документация
+│
+├── routes/                  # Маршруты
+│   ├── passwordRoutes.js    # Маршруты для генерации паролей
+│   └── historyRoutes.js     # Маршруты для истории
+│
+├── controllers/             # Контроллеры
+│   ├── passwordController.js # Логика генерации паролей
+│   └── historyController.js  # Логика работы с историей
+│
+├── middleware/              # Middleware
+│   ├── logger.js           # Логирование запросов
+│   ├── validate.js         # Валидация параметров
+│   └── errorHandler.js     # Обработка ошибок
+│
+└── public/                  # Статические файлы
+    ├── index.html          # Главная страница
+    ├── styles/
+    │   └── main.css        # Стили приложения
+    └── js/
+        └── app.js          # Клиентская логика
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Установка и запуск
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Требования:
+- Node.js версии 14 или выше
+- npm или yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Шаги установки:
 
-## Learn More
+1. **Клонировать репозиторий**
+```bash
+git clone <repository-url>
+cd password-generator-express
+```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Установить зависимости**
+```bash
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Запустить сервер**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Режим разработки (с автоперезагрузкой):
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+Продакшн режим:
+```bash
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Открыть в браузере**
+```
+http://localhost:3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📡 API Документация
+
+### Генерация пароля
+
+**GET** \`/api/password/generate\`
+
+Query параметры:
+- \`length\` (number, 4-64): длина пароля
+- \`uppercase\` (boolean): использовать прописные буквы
+- \`lowercase\` (boolean): использовать строчные буквы
+- \`numbers\` (boolean): использовать цифры
+- \`symbols\` (boolean): использовать символы
+
+Пример запроса:
+```
+GET /api/password/generate?length=16&uppercase=true&lowercase=true&numbers=true&symbols=true
+```
+
+**POST** \`/api/password/generate\`
+
+Body (JSON):
+```json
+{
+  "length": 16,
+  "uppercase": true,
+  "lowercase": true,
+  "numbers": true,
+  "symbols": true
+}
+```
+
+Ответ:
+```json
+{
+  "success": true,
+  "password": "aB3$xY9#mK2!pL5@",
+  "length": 16,
+  "strength": {
+    "score": 8,
+    "level": 4,
+    "label": "Отличный",
+    "color": "#10b981",
+    "checks": {
+      "hasLowercase": true,
+      "hasUppercase": true,
+      "hasNumbers": true,
+      "hasSymbols": true,
+      "length": 16
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "options": { ... }
+}
+```
+
+### Проверка силы пароля
+
+**GET** \`/api/password/strength/:password\`
+
+**POST** \`/api/password/check\`
+
+Body (JSON):
+```json
+{
+  "password": "MyPassword123!"
+}
+```
+
+### История генерации
+
+**GET** \`/api/history\` - получить историю
+
+Query параметры:
+- \`limit\` (number): ограничить количество записей
+
+**POST** \`/api/history\` - добавить в историю
+
+**DELETE** \`/api/history/:id\` - удалить запись по ID
+
+**DELETE** \`/api/history\` - очистить всю историю
+
+## 🔒 Middleware
+
+### 1. Logger Middleware
+Логирует все входящие запросы с информацией:
+- Метод и URL запроса
+- IP адрес клиента
+- Query и Body параметры
+- Статус ответа и время обработки
+
+### 2. Validate Middleware
+Валидирует параметры генерации пароля:
+- Проверка диапазона длины (4-64)
+- Проверка типов данных
+- Проверка наличия хотя бы одного типа символов
+
+### 3. Error Handler Middleware
+Централизованная обработка ошибок:
+- Логирование ошибок в консоль
+- Форматирование ответов с ошибками
+- Детальная информация в режиме разработки
+
+## 📱 Особенности UI
+
+- **Адаптивный дизайн**: работает на всех устройствах
+- **Темная тема**: профессиональная цветовая схема
+- **Интерактивность**: плавные анимации и переходы
+- **Визуализация**: индикатор силы пароля с цветовой кодировкой
+- **Удобство**: копирование в один клик, история генерации
+
+## 🧪 Тестирование API
+
+Примеры запросов с использованием curl:
+
+```bash
+# Генерация пароля (GET)
+curl "http://localhost:3000/api/password/generate?length=20&uppercase=true&lowercase=true&numbers=true&symbols=true"
+
+# Генерация пароля (POST)
+curl -X POST http://localhost:3000/api/password/generate \\
+  -H "Content-Type: application/json" \\
+  -d '{"length":20,"uppercase":true,"lowercase":true,"numbers":true,"symbols":true}'
+
+# Проверка силы пароля
+curl http://localhost:3000/api/password/strength/MyPassword123!
+
+# Получить историю
+curl http://localhost:3000/api/history?limit=5
+
+# Очистить историю
+curl -X DELETE http://localhost:3000/api/history
+```
+
+## 🎓 Соответствие требованиям контрольной работы
+
+✅ **Базовый Express-сервер** - server.js  
+✅ **Маршруты (GET, POST, DELETE)** - routes/  
+✅ **req.params, req.query, req.body** - используются во всех контроллерах  
+✅ **express.json() и express.urlencoded()** - настроены в server.js  
+✅ **Собственные middleware** - logger, validate, errorHandler  
+✅ **express.static()** - раздача файлов из public/  
+✅ **Модульная архитектура** - routes + controllers + middleware  
+✅ **GitHub с README** - полная документация и структура  
+
+## 📸 Скриншоты
+
+### Главная страница
+![Main Page](screenshots/main.png)
+
+### История генерации
+![History](screenshots/history.png)
+
+### Индикатор силы пароля
+![Strength](screenshots/strength.png)
+# KR_5
