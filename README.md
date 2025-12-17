@@ -262,3 +262,4 @@ curl -X DELETE http://localhost:3000/api/history
 ### Индикатор силы пароля
 ![Strength](screenshots/strength.png)
 # KR_5
+# KR_5
