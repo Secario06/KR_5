@@ -254,12 +254,11 @@ curl -X DELETE http://localhost:3000/api/history
 ## 📸 Скриншоты
 
 ### Главная страница
-![Main Page](screenshots/main.png)
+![Main Page](./screenshots/main.png)
 
 ### История генерации
-![History](screenshots/history.png)
+![History](./screenshots/history.png)
 
 ### Индикатор силы пароля
-![Strength](screenshots/strength.png)
-# KR_5
-# KR_5
+![Strength](./screenshots/strength.png)
+

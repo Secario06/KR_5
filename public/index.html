@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecurePass - Генератор Паролей</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+          <path d="M16 8C12.134 8 9 11.134 9 15C9 16.885 9.776 18.588 11.053 19.819L10 24L14.181 22.947C14.768 23.071 15.377 23.135 16 23.135C19.866 23.135 23 19.866 23 15C23 11.134 19.866 8 16 8Z" fill="white"/>
+          <circle cx="16" cy="15" r="3" fill="url(#gradient)"/>
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+              <stop stop-color="#3b82f6"/>
+              <stop offset="1" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>SecurePass</span>
+      </div>
+      <p class="tagline">Профессиональный генератор безопасных паролей</p>
+    </header>
+
+    <!-- Main Generator Section -->
+    <main class="main">
+      <div class="generator-card">
+        <div class="password-display">
+          <input type="text" id="passwordOutput" readonly placeholder="Сгенерированный пароль появится здесь">
+          <button id="copyBtn" class="icon-btn" title="Копировать" disabled>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5 13H4C3.448 13 3 12.552 3 12V4C3 3.448 3.448 3 4 3H12C12.552 3 13 3.448 13 4V5" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </button>
+        </div>
+
+        <div id="strengthBar" class="strength-bar hidden">
+          <div class="strength-fill"></div>
+        </div>
+        <div id="strengthLabel" class="strength-label hidden"></div>
+
+        <!-- Options -->
+        <div class="options">
+          <div class="option-group">
+            <label for="length">Длина пароля: <span id="lengthValue">16</span></label>
+            <input type="range" id="length" min="4" max="64" value="16">
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="uppercase" checked>
+              <span>Прописные буквы (A-Z)</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="lowercase" checked>
+              <span>Строчные буквы (a-z)</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="numbers" checked>
+              <span>Цифры (0-9)</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="symbols" checked>
+              <span>Символы (!@#$%^&*)</span>
+            </label>
+          </div>
+        </div>
+
+        <button id="generateBtn" class="generate-btn">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M17 10C17 13.866 13.866 17 10 17C6.134 17 3 13.866 3 10C3 6.134 6.134 3 10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 3L17 7L13 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Сгенерировать пароль
+        </button>
+      </div>
+
+      <!-- History Section -->
+      <div class="history-card">
+        <div class="history-header">
+          <h2>История генерации</h2>
+          <button id="clearHistoryBtn" class="clear-btn" disabled>Очистить</button>
+        </div>
+        <div id="historyList" class="history-list">
+          <p class="empty-state">История пуста. Сгенерируйте первый пароль!</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Express.js Password Generator</p>
+      <div class="footer-links">
+        <a href="/api/password/generate?length=16&uppercase=true&lowercase=true&numbers=true&symbols=true" target="_blank">API Docs</a>
+        <span>•</span>
+        <a href="https://github.com" target="_blank">GitHub</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
